@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/fevicon.png" type="image/x-icon">
+    <title>KAYAN - Admin Dashboard</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="sub_page">
+    <div class="hero_area">
+        <div class="hero_bg_box">
+            <img src="images/hero-bg.jpg" alt="">
+        </div>
+        <header class="header_section">
+            <div class="header_bottom">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-lg custom_nav-container">
+                        <a class="navbar-brand" href="index.html">KAYAN</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                            <span></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                                
+                                <li class="nav-item"><a class="nav-link" href="service.html">Services</a></li>
+                                <li class="nav-item"><a class="nav-link" href="why.html">Providers</a></li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="team.html">Team</a>
+                                </li>
+                                <li class="nav-item active"><a class="nav-link" href="dash.html">Dashboard</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="index.html"><i class="fa fa-user" aria-hidden="true"></i>
+                                        <span>Logout</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div class="container">
+        <div class="dashboard_section">
+            <br><br>
+            <h2 class="text-center">KAYAN <span>Dashboard</span></h2>
+            <br>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <h4>User Management</h4>
+                    <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addUserModal">Add User</button>
+                    <ul class="list-group">
+                        <li class="list-group-item">User 1 <button class="btn btn-danger btn-sm float-right">Delete</button></li>
+                        <li class="list-group-item">User 2 <button class="btn btn-danger btn-sm float-right">Delete</button></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <h4>Notifications</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">New service added!</li>
+                        <li class="list-group-item">User feedback received.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Add User Modal -->
+            <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select class="form-control" id="role">
+                                        <option>Admin</option>
+                                        <option>User</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Add User</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="footer_section">
+      <div class="container">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">KAYAN</a>
+        </p>
+      </div>
+    </section>
+
+    <script>
+        document.getElementById("displayYear").textContent = new Date().getFullYear();
+
+        // Pie Chart
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        const pieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: ['Service A', 'Service B', 'Service C', 'Service D'],
+                datasets: [{
+                    label: 'Service Distribution',
+                    data: [25, 15, 35, 25],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // Bar Chart
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May'],
+                datasets: [{
+                    label: 'Monthly Revenue',
+                    data: [12000, 19000, 30000, 5000, 20000],
+                    backgroundColor: '#4BC0C0'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
